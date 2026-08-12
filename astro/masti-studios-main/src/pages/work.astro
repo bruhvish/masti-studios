@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav';
+import WorkFilter from '../components/WorkFilter';
+import CTA from '../components/CTA';
+import Footer from '../components/Footer';
+---
+
+<BaseLayout title="Work | Masti Studios">
+  <Nav current="work" />
+
+  <header class="page-head">
+    <div class="wrap">
+      <div class="section-eyebrow">Full Archive</div>
+      <h1>Work, sorted<br />by world.</h1>
+      <p>
+        Every brand lives in a different world: a showroom, a kitchen, a wardrobe, a site under
+        construction. Here's a look across the four we know best.
+      </p>
+    </div>
+  </header>
+
+  <WorkFilter client:load />
+
+  <CTA variant="work" />
+  <Footer current="work" />
+</BaseLayout>

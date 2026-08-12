@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav';
+import PhotoGallery from '../components/PhotoGallery';
+import Footer from '../components/Footer';
+---
+
+<BaseLayout title="Photography — Masti Studios">
+  <Nav current="photography" client:load />
+  <section class="page-head">
+    <div class="wrap">
+      <h1>Photography.</h1>
+      <p>Stills from the same sets, shoots and campaigns — the frames that hold still.</p>
+    </div>
+  </section>
+  <PhotoGallery client:load />
+  <Footer current="photography" />
+</BaseLayout>

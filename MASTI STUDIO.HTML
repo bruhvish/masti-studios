@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Masti Studios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800;900&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #15130F;
+    --ink-soft: #201D17;
+    --ink-line: #3A362C;
+    --paper: #EDE6D6;
+    --paper-dim: #C9C1AE;
+    --marigold: #F2A71B;
+    --coral: #E5486B;
+    --teal: #1F3D3D;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Work Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .display{
+    font-family: 'Big Shoulders Display', sans-serif;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    line-height: 0.92;
+  }
+
+  .mono{
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.06em;
+  }
+
+  a{ color: inherit; text-decoration:none; }
+
+  .wrap{
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(21,19,15,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--ink-line);
+  }
+  nav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    height: 76px;
+  }
+  .logo{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:900;
+    font-size: 24px;
+    letter-spacing: 0.02em;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .logo .dot{
+    width:9px; height:9px; border-radius:50%;
+    background: var(--coral);
+    display:inline-block;
+  }
+  .nav-links{
+    display:flex;
+    gap: 36px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .nav-links a{
+    color: var(--paper-dim);
+    transition: color .2s ease;
+    position: relative;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{ color: var(--marigold); }
+  .nav-cta{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid var(--paper-dim);
+    padding: 9px 16px;
+    border-radius: 2px;
+    transition: all .2s ease;
+    white-space: nowrap;
+  }
+  .nav-cta:hover, .nav-cta:focus-visible{
+    border-color: var(--marigold);
+    background: var(--marigold);
+    color: var(--ink);
+  }
+  @media (max-width: 780px){
+    .nav-links{ display:none; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    padding: 100px 0 80px;
+    border-bottom: 1px solid var(--ink-line);
+  }
+  .frame{
+    position: relative;
+    padding: 56px 40px;
+  }
+  .corner{
+    position:absolute;
+    width: 28px; height: 28px;
+    border-color: var(--marigold);
+    opacity: 0.9;
+  }
+  .corner.tl{ top:0; left:0; border-top:2px solid; border-left:2px solid; }
+  .corner.tr{ top:0; right:0; border-top:2px solid; border-right:2px solid; }
+  .corner.bl{ bottom:0; left:0; border-bottom:2px solid; border-left:2px solid; }
+  .corner.br{ bottom:0; right:0; border-bottom:2px solid; border-right:2px solid; }
+
+  .rec-row{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--paper-dim);
+    margin-bottom: 28px;
+  }
+  .rec-dot{
+    width:7px; height:7px; border-radius:50%;
+    background: var(--coral);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .rec-dot{ animation:none; }
+  }
+  @keyframes pulse{
+    0%,100%{ opacity:1; }
+    50%{ opacity: 0.35; }
+  }
+
+  .hero h1{
+    font-size: clamp(48px, 8.6vw, 108px);
+    max-width: 900px;
+  }
+  .hero h1 em{
+    font-style: normal;
+    color: var(--marigold);
+  }
+  .hero h1 .strike{
+    color: var(--coral);
+  }
+
+  .hero-sub{
+    margin-top: 28px;
+    max-width: 480px;
+    font-size: 17px;
+    color: var(--paper-dim);
+    line-height: 1.55;
+  }
+
+  .hero-tags{
+    margin-top: 26px;
+    display:flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 7px 12px;
+    border: 1px solid var(--ink-line);
+    border-radius: 2px;
+    color: var(--paper-dim);
+  }
+
+  .hero-ctas{
+    margin-top: 40px;
+    display:flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn-primary, .btn-ghost{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 15px 26px;
+    border-radius: 2px;
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    transition: all .2s ease;
+  }
+  .btn-primary{
+    background: var(--coral);
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .btn-primary:hover, .btn-primary:focus-visible{
+    background: var(--marigold);
+    transform: translateY(-1px);
+  }
+  .btn-ghost{
+    border: 1px solid var(--ink-line);
+    color: var(--paper);
+  }
+  .btn-ghost:hover, .btn-ghost:focus-visible{
+    border-color: var(--paper);
+  }
+
+  .timecode{
+    position:absolute;
+    bottom: 0;
+    right: 40px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--paper-dim);
+    display:flex;
+    align-items:center;
+    gap: 8px;
+  }
+  @media (max-width: 620px){
+    .timecode{ position:static; margin-top: 32px; }
+  }
+
+  /* ---------- SHOT LIST / SERVICES ---------- */
+  .services{
+    padding: 90px 0;
+    border-bottom: 1px solid var(--ink-line);
+  }
+  .section-eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--marigold);
+    margin-bottom: 14px;
+    display:flex;
+    align-items:center;
+    gap: 10px;
+  }
+  .section-eyebrow::before{
+    content:'';
+    width: 24px; height:1px;
+    background: var(--marigold);
+  }
+  .services h2{
+    font-size: clamp(32px, 4.6vw, 52px);
+    max-width: 700px;
+    margin-bottom: 60px;
+  }
+
+  .shot{
+    display:grid;
+    grid-template-columns: 140px 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+    padding: 32px 0;
+    border-top: 1px solid var(--ink-line);
+    transition: background .2s ease;
+  }
+  .shot:last-child{ border-bottom: 1px solid var(--ink-line); }
+  .shot:hover{ background: rgba(242,167,27,0.04); }
+
+  .shot-code{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--paper-dim);
+    padding-top: 6px;
+  }
+  .shot-code .n{
+    display:block;
+    font-size: 12px;
+    color: var(--coral);
+    margin-top: 4px;
+  }
+  .shot-title{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight: 700;
+    font-size: clamp(26px, 3vw, 34px);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .shot-desc{
+    color: var(--paper-dim);
+    font-size: 15px;
+    line-height: 1.6;
+    padding-top: 4px;
+  }
+
+  @media (max-width: 780px){
+    .shot{
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .shot-code{ display:flex; gap:10px; align-items:baseline; }
+    .shot-code .n{ margin-top:0; }
+  }
+
+  /* ---------- REEL / WORK ---------- */
+  .work{
+    padding: 90px 0;
+    border-bottom: 1px solid var(--ink-line);
+  }
+  .work-head{
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 48px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .work h2{
+    font-size: clamp(32px, 4.6vw, 52px);
+  }
+  .reel-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--ink-line);
+  }
+  .reel-cell{
+    position: relative;
+    aspect-ratio: 3/4;
+    background: linear-gradient(150deg, var(--ink-soft), var(--teal) 140%);
+    overflow: hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content: flex-end;
+    padding: 18px;
+  }
+  .reel-cell::before{
+    content: '';
+    position:absolute;
+    inset:0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 26px, rgba(237,230,214,0.03) 27px);
+  }
+  .reel-cell .play{
+    width: 38px; height:38px;
+    border: 1px solid var(--paper-dim);
+    border-radius: 50%;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: var(--paper);
+    transition: all .2s ease;
+  }
+  .reel-cell:hover .play{
+    border-color: var(--marigold);
+    color: var(--marigold);
+    transform: scale(1.08);
+  }
+  .reel-cell .rlabel{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--paper-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .reel-cell .rtitle{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  @media (max-width: 900px){
+    .reel-grid{ grid-template-columns: repeat(2,1fr); }
+  }
+
+  /* ---------- MARQUEE ---------- */
+  .marquee{
+    border-bottom: 1px solid var(--ink-line);
+    padding: 22px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-track{
+    display:inline-flex;
+    gap: 40px;
+    animation: scroll 26s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .marquee-track{ animation: none; }
+    .marquee{ overflow-x:auto; }
+  }
+  @keyframes scroll{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
+  }
+  .marquee-item{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+    display:flex;
+    align-items:center;
+    gap: 40px;
+  }
+  .marquee-item .sep{ color: var(--coral); font-family:'IBM Plex Mono', monospace; font-size:16px; }
+
+  /* ---------- CTA ---------- */
+  .cta{
+    padding: 120px 0;
+    text-align: center;
+    position: relative;
+  }
+  .cta h2{
+    font-size: clamp(44px, 9vw, 96px);
+    color: var(--paper);
+  }
+  .cta h2 .accent{ color: var(--marigold); }
+  .cta-sub{
+    margin: 26px auto 0;
+    max-width: 460px;
+    color: var(--paper-dim);
+    font-size: 16px;
+  }
+  .cta .hero-ctas{ justify-content: center; margin-top: 40px; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top: 1px solid var(--ink-line);
+    padding: 32px 0;
+  }
+  footer .wrap{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .foot-mono{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--paper-dim);
+    letter-spacing: 0.04em;
+  }
+  .foot-links{
+    display:flex;
+    gap: 22px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--paper-dim);
+  }
+  .foot-links a:hover, .foot-links a:focus-visible{ color: var(--marigold); }
+
+  :focus-visible{
+    outline: 2px solid var(--marigold);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo"><span class="dot"></span>MASTI STUDIOS</div>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#work">Reel</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="nav-cta">Start a project</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="frame">
+      <span class="corner tl"></span>
+      <span class="corner tr"></span>
+      <span class="corner bl"></span>
+      <span class="corner br"></span>
+
+      <div class="rec-row mono">
+        <span class="rec-dot"></span> NOW SHOOTING — DELHI &amp; BEYOND
+      </div>
+
+      <h1>WE MAKE BRANDS<br><em>IMPOSSIBLE</em><br>TO SCROLL PAST</h1>
+
+      <p class="hero-sub">Masti Studios is a social-first creative house — cinematography, editing, brand identity and design, built for feeds that move fast and audiences that scroll faster.</p>
+
+      <div class="hero-tags">
+        <span class="tag">Cinematography</span>
+        <span class="tag">Video Editing</span>
+        <span class="tag">Brand Building</span>
+        <span class="tag">Graphic Design</span>
+      </div>
+
+      <div class="hero-ctas">
+        <a href="#contact" class="btn-primary">Start a project →</a>
+        <a href="#work" class="btn-ghost">▸ Watch the reel</a>
+      </div>
+
+      <div class="timecode mono" id="timecode">00:00:00:00 <span class="rec-dot" style="animation-duration:2.4s"></span> REC</div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="section-eyebrow">Shot List</div>
+    <h2>Four disciplines, one continuous take.</h2>
+
+    <div class="shot">
+      <div class="shot-code">SCENE<span class="n">01 — WIDE</span></div>
+      <div class="shot-title">Cinematography</div>
+      <div class="shot-desc">On-location and studio shoots built for the platform they'll live on — reels, campaigns, brand films, product stories. We light for phones, not just screens.</div>
+    </div>
+    <div class="shot">
+      <div class="shot-code">SCENE<span class="n">02 — CUT</span></div>
+      <div class="shot-title">Video Editing</div>
+      <div class="shot-desc">Pacing, sound design and colour that hold attention past the first second. From raw footage to scroll-stopping final cut, tuned for retention.</div>
+    </div>
+    <div class="shot">
+      <div class="shot-code">SCENE<span class="n">03 — ID</span></div>
+      <div class="shot-title">Brand Building</div>
+      <div class="shot-desc">Positioning, voice and visual identity that make a brand recognisable in half a second flat — the strategy behind every post, not just the polish.</div>
+    </div>
+    <div class="shot">
+      <div class="shot-code">SCENE<span class="n">04 — LAYOUT</span></div>
+      <div class="shot-title">Graphic Design</div>
+      <div class="shot-desc">Feed layouts, carousels, key art and campaign systems — designed to feel like one world across every post, story and thumbnail.</div>
+    </div>
+  </div>
+</section>
+
+<section class="marquee">
+  <div class="marquee-track">
+    <div class="marquee-item">CINEMATOGRAPHY <span class="sep">///</span></div>
+    <div class="marquee-item">EDITING <span class="sep">///</span></div>
+    <div class="marquee-item">BRAND BUILDING <span class="sep">///</span></div>
+    <div class="marquee-item">GRAPHIC DESIGN <span class="sep">///</span></div>
+    <div class="marquee-item">SOCIAL FIRST <span class="sep">///</span></div>
+    <div class="marquee-item">CINEMATOGRAPHY <span class="sep">///</span></div>
+    <div class="marquee-item">EDITING <span class="sep">///</span></div>
+    <div class="marquee-item">BRAND BUILDING <span class="sep">///</span></div>
+    <div class="marquee-item">GRAPHIC DESIGN <span class="sep">///</span></div>
+    <div class="marquee-item">SOCIAL FIRST <span class="sep">///</span></div>
+  </div>
+</section>
+
+<section class="work" id="work">
+  <div class="wrap">
+    <div class="work-head">
+      <div>
+        <div class="section-eyebrow">Showreel</div>
+        <h2>Recent takes.</h2>
+      </div>
+      <p style="color:var(--paper-dim); max-width:320px; font-size:15px;">A placeholder grid — swap these frames for real client work, case studies and campaign stills.</p>
+    </div>
+    <div class="reel-grid">
+      <div class="reel-cell"><div class="play">▸</div><div class="rlabel mono">Reel — 00:32</div><div class="rtitle">Client Name</div></div>
+      <div class="reel-cell"><div class="play">▸</div><div class="rlabel mono">Campaign</div><div class="rtitle">Client Name</div></div>
+      <div class="reel-cell"><div class="play">▸</div><div class="rlabel mono">Brand Film</div><div class="rtitle">Client Name</div></div>
+      <div class="reel-cell"><div class="play">▸</div><div class="rlabel mono">Reel — 00:47</div><div class="rtitle">Client Name</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="wrap">
+    <h2>LET'S MAKE<br>SOMETHING <span class="accent">WORTH</span><br>WATCHING</h2>
+    <p class="cta-sub">Tell us about your brand and what you're trying to launch, grow or fix — we'll get back within a day.</p>
+    <div class="hero-ctas">
+      <a href="mailto:hello@mastistudios.com" class="btn-primary">hello@mastistudios.com</a>
+      <a href="#" class="btn-ghost">Follow on Instagram</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-mono">© 2026 MASTI STUDIOS. DELHI, INDIA.</div>
+    <div class="foot-links">
+      <a href="#services">Services</a>
+      <a href="#work">Reel</a>
+      <a href="#contact">Contact</a>
+      <a href="#">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const start = Date.now();
+  const tc = document.getElementById('timecode');
+  function pad(n){ return String(n).padStart(2,'0'); }
+  function update(){
+    const elapsed = Date.now() - start;
+    const totalSeconds = Math.floor(elapsed/1000);
+    const hh = Math.floor(totalSeconds/3600);
+    const mm = Math.floor((totalSeconds%3600)/60);
+    const ss = totalSeconds%60;
+    const ff = Math.floor((elapsed%1000)/40);
+    tc.childNodes[0].textContent = `${pad(hh)}:${pad(mm)}:${pad(ss)}:${pad(ff)} `;
+  }
+  setInterval(update, 40);
+  update();
+</script>
+
+</body>
+</html>
