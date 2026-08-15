@@ -174,6 +174,118 @@ nav .wrap{ display:flex; align-items:center; justify-content: space-between; hei
 
 .shot-tags{ margin-top: 14px; display:flex; flex-wrap: wrap; gap: 8px; }
 
+/* ---------- SERVICES ACCORDION ---------- */
+.svc-list{
+  border-top: 1px solid var(--ink-line);
+}
+.svc-item{
+  border-bottom: 1px solid var(--ink-line);
+}
+
+.svc-header{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 140px 50px 1fr 24px;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: var(--paper);
+  transition: background .2s ease;
+}
+.svc-header:hover{ background: rgba(242,167,27,0.04); }
+
+.svc-item .shot-code{ padding-top: 0; }
+.svc-item .shot-title{ transition: color .25s ease; }
+.svc-item-open .shot-title{ color: var(--marigold); }
+
+.svc-icon-wrap{
+  width: 50px; height: 50px;
+  border: 1px solid var(--ink-line);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--paper-dim);
+  transition: border-color .25s ease, color .25s ease, transform .25s ease;
+}
+.svc-item-open .svc-icon-wrap{
+  border-color: var(--marigold);
+  color: var(--marigold);
+  transform: scale(1.08);
+}
+
+/* icon micro-animations, only active when open */
+.svc-icon-blades{ transform-origin: 17px 17px; transition: transform .5s ease; }
+.svc-icon-active .svc-icon-blades{ transform: rotate(28deg); }
+
+.svc-icon-playhead{ transition: transform .6s ease; transform-origin: 12px 17px; }
+.svc-icon-active .svc-icon-playhead{ transform: translateX(8px); }
+
+.svc-icon-draw{
+  stroke-dasharray: 80;
+  stroke-dashoffset: 80;
+  transition: stroke-dashoffset .6s ease;
+}
+.svc-icon-active .svc-icon-draw{ stroke-dashoffset: 0; }
+
+.svc-icon-layers{ transition: transform .4s ease; }
+.svc-icon-active .svc-icon-layers rect:nth-child(1){ transform: translate(-2px, -2px); }
+.svc-icon-active .svc-icon-layers rect:nth-child(2){ transform: translate(1px, 0px); }
+.svc-icon-active .svc-icon-layers rect:nth-child(3){ transform: translate(-1px, 2px); }
+.svc-icon-layers rect{ transition: transform .4s ease; }
+
+.svc-plus{
+  position: relative;
+  width: 20px; height: 20px;
+  justify-self: end;
+}
+.svc-plus span{
+  position: absolute;
+  background: var(--paper-dim);
+  transition: all .3s ease;
+}
+.svc-plus span:nth-child(1){
+  top: 9px; left: 2px; width: 16px; height: 1.5px;
+}
+.svc-plus span:nth-child(2){
+  top: 2px; left: 9px; width: 1.5px; height: 16px;
+}
+.svc-plus-open span{ background: var(--marigold); }
+.svc-plus-open span:nth-child(2){ transform: rotate(90deg); opacity: 0; }
+
+/* smooth expand/collapse using the grid-rows trick — no JS height measuring needed */
+.svc-body{
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .35s ease;
+}
+.svc-item-open .svc-body{
+  grid-template-rows: 1fr;
+}
+.svc-body-inner{
+  overflow: hidden;
+  padding-left: 214px;
+}
+.svc-item-open .svc-body-inner{
+  padding-bottom: 32px;
+}
+.shot-tags{ margin-top: 14px; }
+
+@media (max-width: 780px){
+  .svc-header{
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "code plus" "icon title";
+    row-gap: 12px;
+  }
+  .svc-header .shot-code{ grid-area: code; }
+  .svc-header .svc-plus{ grid-area: plus; }
+  .svc-header .svc-icon-wrap{ grid-area: icon; }
+  .svc-header .shot-title{ grid-area: title; }
+  .svc-body-inner{ padding-left: 0; }
+}
+
 @media (max-width: 780px){
   .shot{ grid-template-columns: 1fr; gap: 10px; }
   .shot-code{ display:flex; gap:10px; align-items:baseline; }
@@ -267,6 +379,54 @@ footer .wrap{ display:flex; justify-content: space-between; align-items:center; 
 .filter-btn.active .swatch{ background: var(--ink); }
 .filter-count{ margin-left: auto; font-family:'IBM Plex Mono', monospace; font-size: 12px; color: var(--paper-dim); }
 @media (max-width: 620px){ .filter-count{ margin-left:0; width:100%; order:99; margin-top:6px; } }
+
+/* ---------- WORK PAGE: SERVICE FILTER ROW ---------- */
+.filter-row--service{
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--ink-line);
+}
+/* ---------- WORK PAGE: PHOTO CARD VARIANT ---------- */
+/* Photo cards sit in the same .project-grid as video cards but skip the
+   hover-preview / play-button treatment in favour of a static frame and a
+   viewfinder-style expand mark, echoing the hero's corner brackets. */
+.project-card--photo .project-expand{
+  width: 36px; height: 36px;
+  border: 1px solid rgba(237,230,214,0.5);
+  border-radius: 4px;
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom: 14px;
+  font-size: 14px; color: var(--paper);
+  transition: all .2s ease;
+}
+.project-card--photo:hover .project-expand{
+  border-color: var(--marigold);
+  color: var(--marigold);
+  transform: scale(1.08);
+}
+.project-card--photo .project-photo{
+  transition: transform .3s ease;
+}
+.project-card--photo:hover .project-photo{
+  transform: scale(1.04);
+}
+.filter-btn--service{
+  border-radius: 4px; /* squared off vs. the genre row's pills, so the two rows read as separate dimensions */
+}
+.svc-code{
+  font-size: 10px;
+  color: var(--coral);
+  border: 1px solid var(--ink-line);
+  padding: 2px 6px;
+  border-radius: 2px;
+  letter-spacing: 0.08em;
+  transition: color .2s ease, border-color .2s ease;
+}
+.filter-btn--service:hover .svc-code{ border-color: var(--paper-dim); }
+.filter-btn--service.active .svc-code{
+  color: var(--ink);
+  border-color: var(--ink);
+}
 
 /* ---------- WORK PAGE: GRID ---------- */
 .grid-section{ padding: 60px 0 110px; }
@@ -504,4 +664,273 @@ footer .wrap{ display:flex; justify-content: space-between; align-items:center; 
   padding: 4px 6px;
   margin: 0 -6px;
   width: fit-content;
+}
+
+/* ---------- WORK PAGE: PHOTO CARD VARIANT ---------- */
+/* Photo cards sit in the same .project-grid as video cards but skip the
+   hover-preview / play-button treatment in favour of a static frame and a
+   viewfinder-style expand mark, echoing the hero's corner brackets. */
+.project-card--photo .project-expand{
+  width: 36px; height: 36px;
+  border: 1px solid rgba(237,230,214,0.5);
+  border-radius: 4px;
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom: 14px;
+  font-size: 14px; color: var(--paper);
+  transition: all .2s ease;
+}
+.project-card--photo:hover .project-expand{
+  border-color: var(--marigold);
+  color: var(--marigold);
+  transform: scale(1.08);
+}
+.project-card--photo .project-photo{
+  transition: transform .3s ease;
+}
+.project-card--photo:hover .project-photo{
+  transform: scale(1.04);
+}
+
+/* ---------- GENRE: PERSONAL BRANDING ---------- */
+.cat-personalbranding{ color: #A98B4F; }
+
+/* ---------- WORK PAGE: PHOTO CARD VARIANT ---------- */
+/* Photo cards sit in the same .project-grid as video cards but skip the
+   hover-preview / play-button treatment in favour of a static frame and a
+   viewfinder-style expand mark, echoing the hero's corner brackets. */
+.project-card--photo .project-expand{
+  width: 36px; height: 36px;
+  border: 1px solid rgba(237,230,214,0.5);
+  border-radius: 4px;
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom: 14px;
+  font-size: 14px; color: var(--paper);
+  transition: all .2s ease;
+}
+.project-card--photo:hover .project-expand{
+  border-color: var(--marigold);
+  color: var(--marigold);
+  transform: scale(1.08);
+}
+.project-card--photo .project-photo{
+  transition: transform .3s ease;
+}
+.project-card--photo:hover .project-photo{
+  transform: scale(1.04);
+}
+
+/* ---------- GENRE: PERSONAL BRANDING ---------- */
+.cat-personalbranding{ color: #A98B4F; }
+
+/* ---------- WORK PAGE: FILTER BAR COLLAPSE ON SCROLL ---------- */
+.filters{
+  transition: transform .3s ease;
+}
+.filters--hidden{
+  transform: translateY(-100%);
+}
+@media (prefers-reduced-motion: reduce){
+  .filters{ transition: none; }
+}/* ---------- ABOUT PAGE: SCROLL REVEAL ---------- */
+.reveal{
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.is-in{
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity: 1; transform: none; transition: none; }
+}
+
+/* ---------- ABOUT: HERO ---------- */
+.about-hero{
+  padding: 100px 0 70px;
+  border-bottom: 1px solid var(--ink-line);
+}
+.about-hero h1{
+  font-size: clamp(40px, 7vw, 88px);
+  max-width: 900px;
+  margin-top: 6px;
+}
+.about-hero h1 em{ font-style: normal; color: var(--marigold); }
+.about-hero .hero-sub{ margin-top: 26px; }
+
+/* ---------- ABOUT: SHARED SECTION RHYTHM ---------- */
+.about-who, .about-principles, .about-system, .about-industries, .about-crew{
+  padding: 90px 0;
+  border-bottom: 1px solid var(--ink-line);
+}
+.about-who h2, .about-principles h2, .about-system h2, .about-industries h2, .about-crew h2{
+  font-size: clamp(32px, 4.6vw, 52px);
+  max-width: 700px;
+  margin-bottom: 28px;
+}
+.about-lead{
+  max-width: 620px;
+  color: var(--paper-dim);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+/* ---------- ABOUT: WORKFLOW STRIP ---------- */
+.workflow{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 40px;
+}
+.workflow-step{
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  padding: 12px 18px;
+  border: 1px solid var(--ink-line);
+  border-radius: 999px;
+  color: var(--paper);
+}
+.workflow-arrow{ color: var(--coral); font-size: 14px; }
+
+/* ---------- ABOUT: PRINCIPLES ---------- */
+.principle-grid{
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px 40px;
+}
+.principle{
+  padding-top: 24px;
+  border-top: 1px solid var(--ink-line);
+}
+.principle .shot-code{ display: block; margin-bottom: 12px; color: var(--coral); }
+.principle h3{
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(22px, 2.6vw, 28px);
+  line-height: 1.05;
+  margin-bottom: 10px;
+}
+.principle p{ color: var(--paper-dim); font-size: 15px; line-height: 1.6; }
+@media (max-width: 700px){
+  .principle-grid{ grid-template-columns: 1fr; }
+}
+
+/* ---------- ABOUT: CREATIVE SYSTEM ---------- */
+.system-flow{
+  margin-top: 44px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+}
+.system-node{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 20px 22px;
+  border: 1px solid var(--ink-line);
+  border-radius: 6px;
+  min-width: 150px;
+}
+.system-node-name{
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 17px;
+}
+.system-connector{
+  width: 40px;
+  height: 1px;
+  background: var(--ink-line);
+  position: relative;
+  flex-shrink: 0;
+  margin: 0 4px;
+}
+.system-connector::after{
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: -3px;
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid var(--marigold);
+  border-right: 1px solid var(--marigold);
+  transform: rotate(45deg);
+}
+@media (max-width: 780px){
+  .system-flow{ flex-direction: column; align-items: stretch; }
+  .system-node{ width: 100%; }
+  .system-connector{
+    width: 1px;
+    height: 28px;
+    margin: 0 0 0 22px;
+  }
+  .system-connector::after{
+    right: -3px;
+    top: unset;
+    bottom: -1px;
+    transform: rotate(135deg);
+  }
+}
+
+/* ---------- ABOUT: INDUSTRIES ---------- */
+.industry-chips{
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.industry-chip{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 10px 18px;
+  border: 1px solid var(--ink-line);
+  border-radius: 999px;
+}
+.industry-chip .swatch{ width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.about-work-link{ margin-top: 36px; display: inline-flex; }
+
+/* ---------- ABOUT: CREW ---------- */
+.crew-grid{
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.crew-card{ display: flex; flex-direction: column; }
+.crew-photo{
+  aspect-ratio: 3/4;
+  border-radius: 6px;
+  background: linear-gradient(150deg, var(--ink-soft), var(--teal) 140%);
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.crew-photo::after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 26px, rgba(237,230,214,0.03) 27px);
+}
+.crew-index{ font-size: 11px; color: var(--marigold); letter-spacing: 0.08em; }
+.crew-role{
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 16px;
+  margin-top: 4px;
+}
+@media (max-width: 900px){
+  .crew-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px){
+  .crew-grid{ grid-template-columns: 1fr; }
 }

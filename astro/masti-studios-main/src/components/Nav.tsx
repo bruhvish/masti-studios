@@ -1,7 +1,7 @@
 import { GOOGLE_FORM_URL } from '../siteConfig';
 
 interface NavProps {
-  current?: 'home' | 'work' | 'photography';
+  current?: 'home' | 'work' | 'about';
 }
 
 export default function Nav({ current = 'home' }: NavProps) {
@@ -17,8 +17,8 @@ export default function Nav({ current = 'home' }: NavProps) {
         </a>
         <div className="nav-links">
           <a href={servicesHref}>Services</a>
+          <a href="/about" className={current === 'about' ? 'current' : ''}>About</a>
           <a href="/work" className={current === 'work' ? 'current' : ''}>Work</a>
-          <a href="/photography" className={current === 'photography' ? 'current' : ''}>Photography</a>
           <a href={contactHref}>Contact</a>
         </div>
         <a href={GOOGLE_FORM_URL} target="_blank" rel="noopener" className="nav-cta">

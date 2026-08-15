@@ -1,0 +1,169 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav';
+import CTA from '../components/CTA';
+import Footer from '../components/Footer';
+---
+
+<BaseLayout title="About | Masti Studios" description="Who Masti Studios is, how we think, and the disciplines we work across — cinematography, editing, brand building and design.">
+  <Nav current="about" />
+
+  <!-- 01 — HERO -->
+  <header class="about-hero">
+    <div class="wrap">
+      <div class="frame">
+        <span class="corner tl"></span>
+        <span class="corner tr"></span>
+        <span class="corner bl"></span>
+        <span class="corner br"></span>
+
+        <div class="rec-row mono">
+          <span class="rec-dot"></span>
+          SCENE 00 — NO SCRIPT
+        </div>
+
+        <h1>
+          We make things people watch<br />
+          <em>on purpose,</em> not by accident.
+        </h1>
+
+        <p class="hero-sub">
+          Masti means mischief. We point a camera at it, cut it into something that doesn't
+          waste anyone's time, and wrap it in a brand people actually remember. Four disciplines,
+          one studio, an unreasonable number of opinions about pacing.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- 02 — WHO WE ARE -->
+  <section class="about-who reveal">
+    <div class="wrap">
+      <div class="section-eyebrow">Who We Are</div>
+      <h2>One studio.<br />Way too many opinions.</h2>
+      <p class="about-lead">
+        Hire four different vendors for a shoot, an edit, a brand system and the social layout,
+        and you'll get four invoices, four inboxes, and a campaign that looks like it was
+        assembled by committee — because it was. We do all of it ourselves, in the same room,
+        usually while arguing about a cut that's three seconds too long.
+      </p>
+
+      <div class="workflow mono">
+        <span class="workflow-step">IDEA</span>
+        <span class="workflow-arrow">→</span>
+        <span class="workflow-step">SHOOT</span>
+        <span class="workflow-arrow">→</span>
+        <span class="workflow-step">EDIT</span>
+        <span class="workflow-arrow">→</span>
+        <span class="workflow-step">DESIGN</span>
+        <span class="workflow-arrow">→</span>
+        <span class="workflow-step">CAMPAIGN</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 — HOW WE THINK -->
+  <section class="about-principles reveal">
+    <div class="wrap">
+      <div class="section-eyebrow">How We Think</div>
+      <h2>Four rules we made up<br />and now live by.</h2>
+
+      <div class="principle-grid">
+        <div class="principle">
+          <span class="shot-code">P.01</span>
+          <h3>Stop the scroll</h3>
+          <p>Three seconds. That's the whole pitch. If it doesn't land by then, it doesn't land.</p>
+        </div>
+        <div class="principle">
+          <span class="shot-code">P.02</span>
+          <h3>Feel something, anything</h3>
+          <p>Bored is the only reaction we're not willing to accept.</p>
+        </div>
+        <div class="principle">
+          <span class="shot-code">P.03</span>
+          <h3>Look like you, not everyone else</h3>
+          <p>Cover the logo. If you can't tell whose it is, we've done it wrong.</p>
+        </div>
+        <div class="principle">
+          <span class="shot-code">P.04</span>
+          <h3>Never be boring</h3>
+          <p>This rule beats the other three in a fight. Every single time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 — THE CREATIVE SYSTEM -->
+  <section class="about-system reveal">
+    <div class="wrap">
+      <div class="section-eyebrow">The Creative System</div>
+      <h2>Four disciplines.<br />One chaotic assembly line.</h2>
+      <p class="about-lead">
+        Nothing here happens in isolation. The shoot already knows how it's getting cut.
+        The edit already knows what brand it has to wear. Nobody's sitting around waiting
+        for a briefing document — we just started.
+      </p>
+
+      <div class="system-flow">
+        <div class="system-node">
+          <span class="svc-code">WIDE</span>
+          <span class="system-node-name">Cinematography</span>
+        </div>
+        <span class="system-connector" aria-hidden="true"></span>
+        <div class="system-node">
+          <span class="svc-code">CUT</span>
+          <span class="system-node-name">Video Editing</span>
+        </div>
+        <span class="system-connector" aria-hidden="true"></span>
+        <div class="system-node">
+          <span class="svc-code">ID</span>
+          <span class="system-node-name">Brand Building</span>
+        </div>
+        <span class="system-connector" aria-hidden="true"></span>
+        <div class="system-node">
+          <span class="svc-code">LAYOUT</span>
+          <span class="system-node-name">Graphic Design</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 — WHO WE'VE WORKED WITH -->
+  <section class="about-industries reveal">
+    <div class="wrap">
+      <div class="section-eyebrow">Who We've Worked With</div>
+      <h2>We've pointed a camera<br />at weirder things than your brand.</h2>
+
+    
+
+      <a href="/work" class="btn-ghost about-work-link">See the receipts →</a>
+    </div>
+  </section>
+
+ 
+  <!-- 07 — CLOSING CTA -->
+  <CTA variant="about" />
+  <Footer current="about" />
+</BaseLayout>
+
+<script>
+  const items = document.querySelectorAll('.reveal');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    items.forEach((el) => el.classList.add('is-in'));
+  } else {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-in');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -60px 0px' }
+    );
+    items.forEach((el) => observer.observe(el));
+  }
+</script>
