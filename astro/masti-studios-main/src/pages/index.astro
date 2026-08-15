@@ -12,11 +12,11 @@ import Footer from '../components/Footer';
 
 <BaseLayout title="Masti Studios">
   <Nav current="home" />
-  <Hero client:load />
-  <Services client:load />
+  <Hero client:visible />
+  <Services client:visible />
   <Marquee />
-  <ReelTeaser client:load />
-  <PhotoTeaser client:load />
+  <ReelTeaser client:visible />
+  <PhotoTeaser client:visible />
   <CTA variant="home" />
   <Footer current="home" />
 </BaseLayout>

@@ -3,12 +3,23 @@ import { GOOGLE_FORM_URL } from '../siteConfig';
 
 // Swap this for your best reel — used as the looping background behind the headline.
 const HERO_VIDEO = '/video/hunteractivationm.mp4';
+// Single still frame shown instantly while the video streams in behind it.
+// Generate with: ffmpeg -i public/video/hunteractivationm.mp4 -ss 00:00:01 -vframes 1 public/video/hero-poster.jpg
+const HERO_POSTER = '/video/hero-poster.jpg';
 
 export default function Hero() {
   return (
     <section className="hero">
       <div className="hero-bg">
-        <video src={HERO_VIDEO} autoPlay muted loop playsInline preload="auto" />
+        <video
+          src={HERO_VIDEO}
+          poster={HERO_POSTER}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        />
       </div>
 
       <div className="wrap">

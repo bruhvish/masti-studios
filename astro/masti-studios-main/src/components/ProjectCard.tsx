@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useFirstFramePoster } from '../hooks/useFirstFramePoster';
 
 interface ProjectCardProps {
@@ -17,9 +17,36 @@ interface ProjectCardProps {
 export default function ProjectCard({
   label, title, video, poster, posterFrame, posterFps, catClassName, catName, cardTint, onOpen,
 }: ProjectCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hovering, setHovering] = useState(false);
+  // Only mount the <video> element once the card has actually scrolled
+  // near the viewport — avoids kicking off dozens of network requests
+  // for cards nobody has seen yet.
+  const [nearViewport, setNearViewport] = useState(false);
   const resolvedPoster = useFirstFramePoster(video, poster, posterFrame ?? 5, posterFps ?? 30);
+
+  useEffect(() => {
+    if (!video || nearViewport) return;
+    const el = cardRef.current;
+    if (!el || !('IntersectionObserver' in window)) {
+      setNearViewport(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setNearViewport(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { rootMargin: '400px 0px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [video, nearViewport]);
 
   const handleEnter = () => {
     setHovering(true);
@@ -37,6 +64,7 @@ export default function ProjectCard({
 
   return (
     <div
+      ref={cardRef}
       className={`project-card ${video ? 'has-video' : ''}`}
       style={{ ['--card-a' as any]: cardTint }}
       onMouseEnter={() => video && handleEnter()}
@@ -50,10 +78,11 @@ export default function ProjectCard({
           className="project-poster"
           src={resolvedPoster}
           alt=""
+          loading="lazy"
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
         />
       )}
-      {video && (
+      {video && nearViewport && (
         <video
           ref={videoRef}
           className="project-video"

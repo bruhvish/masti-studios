@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800;900&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
-
 :root{
   --ink: #15130F;
   --ink-soft: #201D17;
@@ -320,8 +318,11 @@ nav .wrap{ display:flex; align-items:center; justify-content: space-between; hei
 .reel-cell:hover .play{ border-color: var(--marigold); color: var(--marigold); transform: scale(1.08); }
 .reel-cell .rlabel{ font-family:'IBM Plex Mono', monospace; font-size: 11px; color: var(--paper-dim); text-transform: uppercase; letter-spacing: 0.05em; }
 .reel-cell .rtitle{ font-family:'Big Shoulders Display', sans-serif; font-weight: 700; font-size: 20px; text-transform: uppercase; margin-top: 4px; }
-@media (max-width: 900px){ .reel-grid{ grid-template-columns: repeat(2,1fr); } }
-
+@media (max-width: 900px){
+  .reel-grid-irregular{ grid-template-columns: repeat(2,1fr); }
+  .reel-cell-0, .reel-cell-1, .reel-cell-2,
+  .reel-grid-irregular .reel-cell:nth-child(n+4){ grid-column: span 1; aspect-ratio: 3/4; align-self: auto; }
+}
 /* ---------- MARQUEE ---------- */
 .marquee{ border-bottom: 1px solid var(--ink-line); padding: 22px 0; overflow: hidden; white-space: nowrap; }
 .marquee-track{ display:inline-flex; gap: 40px; animation: scroll 26s linear infinite; }
@@ -642,7 +643,7 @@ footer .wrap{ display:flex; justify-content: space-between; align-items:center; 
 .reel-cell-0{ grid-column: span 4; aspect-ratio: 16/10; }
 .reel-cell-1{ grid-column: span 2; aspect-ratio: 3/4; align-self: end; }
 .reel-cell-2{ grid-column: span 2; aspect-ratio: 3/4; }
-.reel-cell-1 ~ .reel-cell{ grid-column: span 4; aspect-ratio: 16/10; }
+.reel-grid-irregular .reel-cell:nth-child(n+4){ grid-column: span 4; aspect-ratio: 16/10; }
 @media (max-width: 900px){
   .reel-grid-irregular{ grid-template-columns: repeat(2,1fr); }
   .reel-cell-0, .reel-cell-1, .reel-cell-2{ grid-column: span 1; aspect-ratio: 3/4; align-self: auto; }
