@@ -26,7 +26,7 @@ export default function PhotoTeaser() {
             <div className="section-eyebrow">Photography</div>
             <h2>Stills, too.</h2>
           </div>
-          <a href="/photography" className="btn-ghost">View full gallery →</a>
+          <a href="/work?service=photography" className="btn-ghost">View full gallery →</a>
         </div>
         <PhotoMasonry photos={PHOTOS} />
       </div>

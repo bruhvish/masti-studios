@@ -366,6 +366,13 @@ footer .wrap{ display:flex; justify-content: space-between; align-items:center; 
 .filters{
   padding: 32px 0; border-bottom: 1px solid var(--ink-line); position: sticky; top: 76px;
   background: rgba(21,19,15,0.92); backdrop-filter: blur(8px); z-index: 40;
+  transition: transform .3s ease;
+}
+.filters--hidden{
+  transform: translateY(-100%);
+}
+@media (prefers-reduced-motion: reduce){
+  .filters{ transition: none; }
 }
 .filter-row{ display:flex; gap: 12px; flex-wrap: wrap; align-items:center; }
 .filter-btn{
@@ -379,37 +386,12 @@ footer .wrap{ display:flex; justify-content: space-between; align-items:center; 
 .filter-btn.active{ background: var(--paper); color: var(--ink); border-color: var(--paper); }
 .filter-btn.active .swatch{ background: var(--ink); }
 .filter-count{ margin-left: auto; font-family:'IBM Plex Mono', monospace; font-size: 12px; color: var(--paper-dim); }
-@media (max-width: 620px){ .filter-count{ margin-left:0; width:100%; order:99; margin-top:6px; } }
 
 /* ---------- WORK PAGE: SERVICE FILTER ROW ---------- */
 .filter-row--service{
   margin-top: 14px;
   padding-top: 14px;
   border-top: 1px dashed var(--ink-line);
-}
-/* ---------- WORK PAGE: PHOTO CARD VARIANT ---------- */
-/* Photo cards sit in the same .project-grid as video cards but skip the
-   hover-preview / play-button treatment in favour of a static frame and a
-   viewfinder-style expand mark, echoing the hero's corner brackets. */
-.project-card--photo .project-expand{
-  width: 36px; height: 36px;
-  border: 1px solid rgba(237,230,214,0.5);
-  border-radius: 4px;
-  display:flex; align-items:center; justify-content:center;
-  margin-bottom: 14px;
-  font-size: 14px; color: var(--paper);
-  transition: all .2s ease;
-}
-.project-card--photo:hover .project-expand{
-  border-color: var(--marigold);
-  color: var(--marigold);
-  transform: scale(1.08);
-}
-.project-card--photo .project-photo{
-  transition: transform .3s ease;
-}
-.project-card--photo:hover .project-photo{
-  transform: scale(1.04);
 }
 .filter-btn--service{
   border-radius: 4px; /* squared off vs. the genre row's pills, so the two rows read as separate dimensions */
@@ -427,6 +409,28 @@ footer .wrap{ display:flex; justify-content: space-between; align-items:center; 
 .filter-btn--service.active .svc-code{
   color: var(--ink);
   border-color: var(--ink);
+}
+
+/* Rows scroll horizontally on one line instead of wrapping across several —
+   keeps the sticky bar short so it doesn't eat the screen on mobile when
+   it slides back in on scroll-up. */
+@media (max-width: 620px){
+  .filter-row{
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .filter-row::-webkit-scrollbar{ display: none; }
+  .filter-btn{ flex-shrink: 0; }
+  .filter-row--service{ margin-top: 10px; padding-top: 10px; }
+  .filter-count{
+    margin-left: 12px;
+    order: 0;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
 }
 
 /* ---------- WORK PAGE: GRID ---------- */
@@ -476,8 +480,33 @@ footer .wrap{ display:flex; justify-content: space-between; align-items:center; 
 .cat-automobile{ color: #6FA8A8; }
 .cat-realestate{ color: var(--slate); }
 .cat-events{ color: #9B6BC9; }
+.cat-personalbranding{ color: #A98B4F; }
 
 .project-card.hidden{ display:none; }
+
+/* Photo cards sit in the same .project-grid as video cards but skip the
+   hover-preview / play-button treatment in favour of a static frame and a
+   viewfinder-style expand mark, echoing the hero's corner brackets. */
+.project-card--photo .project-expand{
+  width: 36px; height: 36px;
+  border: 1px solid rgba(237,230,214,0.5);
+  border-radius: 4px;
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom: 14px;
+  font-size: 14px; color: var(--paper);
+  transition: all .2s ease;
+}
+.project-card--photo:hover .project-expand{
+  border-color: var(--marigold);
+  color: var(--marigold);
+  transform: scale(1.08);
+}
+.project-card--photo .project-photo{
+  transition: transform .3s ease;
+}
+.project-card--photo:hover .project-photo{
+  transform: scale(1.04);
+}
 
 @media (max-width: 900px){ .project-grid{ grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px){ .project-grid{ grid-template-columns: 1fr; } }
@@ -488,6 +517,8 @@ footer .wrap{ display:flex; justify-content: space-between; align-items:center; 
 }
 
 /* ---------- PHOTOGRAPHY / MASONRY ---------- */
+/* NOTE: still used by the homepage PhotoTeaser section. If PhotoTeaser
+   no longer renders PhotoMasonry, this whole block can be deleted. */
 .photo-teaser{ padding: 90px 0; border-bottom: 1px solid var(--ink-line); }
 
 .photo-masonry{
@@ -646,7 +677,8 @@ footer .wrap{ display:flex; justify-content: space-between; align-items:center; 
 .reel-grid-irregular .reel-cell:nth-child(n+4){ grid-column: span 4; aspect-ratio: 16/10; }
 @media (max-width: 900px){
   .reel-grid-irregular{ grid-template-columns: repeat(2,1fr); }
-  .reel-cell-0, .reel-cell-1, .reel-cell-2{ grid-column: span 1; aspect-ratio: 3/4; align-self: auto; }
+  .reel-cell-0, .reel-cell-1, .reel-cell-2,
+  .reel-grid-irregular .reel-cell:nth-child(n+4){ grid-column: span 1; aspect-ratio: 3/4; align-self: auto; }
 }
 
 /* ---------- INLINE PROJECT VIDEO (Work page) ---------- */
@@ -667,72 +699,7 @@ footer .wrap{ display:flex; justify-content: space-between; align-items:center; 
   width: fit-content;
 }
 
-/* ---------- WORK PAGE: PHOTO CARD VARIANT ---------- */
-/* Photo cards sit in the same .project-grid as video cards but skip the
-   hover-preview / play-button treatment in favour of a static frame and a
-   viewfinder-style expand mark, echoing the hero's corner brackets. */
-.project-card--photo .project-expand{
-  width: 36px; height: 36px;
-  border: 1px solid rgba(237,230,214,0.5);
-  border-radius: 4px;
-  display:flex; align-items:center; justify-content:center;
-  margin-bottom: 14px;
-  font-size: 14px; color: var(--paper);
-  transition: all .2s ease;
-}
-.project-card--photo:hover .project-expand{
-  border-color: var(--marigold);
-  color: var(--marigold);
-  transform: scale(1.08);
-}
-.project-card--photo .project-photo{
-  transition: transform .3s ease;
-}
-.project-card--photo:hover .project-photo{
-  transform: scale(1.04);
-}
-
-/* ---------- GENRE: PERSONAL BRANDING ---------- */
-.cat-personalbranding{ color: #A98B4F; }
-
-/* ---------- WORK PAGE: PHOTO CARD VARIANT ---------- */
-/* Photo cards sit in the same .project-grid as video cards but skip the
-   hover-preview / play-button treatment in favour of a static frame and a
-   viewfinder-style expand mark, echoing the hero's corner brackets. */
-.project-card--photo .project-expand{
-  width: 36px; height: 36px;
-  border: 1px solid rgba(237,230,214,0.5);
-  border-radius: 4px;
-  display:flex; align-items:center; justify-content:center;
-  margin-bottom: 14px;
-  font-size: 14px; color: var(--paper);
-  transition: all .2s ease;
-}
-.project-card--photo:hover .project-expand{
-  border-color: var(--marigold);
-  color: var(--marigold);
-  transform: scale(1.08);
-}
-.project-card--photo .project-photo{
-  transition: transform .3s ease;
-}
-.project-card--photo:hover .project-photo{
-  transform: scale(1.04);
-}
-
-/* ---------- GENRE: PERSONAL BRANDING ---------- */
-.cat-personalbranding{ color: #A98B4F; }
-
-/* ---------- WORK PAGE: FILTER BAR COLLAPSE ON SCROLL ---------- */
-.filters{
-  transition: transform .3s ease;
-}
-.filters--hidden{
-  transform: translateY(-100%);
-}
-@media (prefers-reduced-motion: reduce){
-  .filters{ transition: none; }
-}/* ---------- ABOUT PAGE: SCROLL REVEAL ---------- */
+/* ---------- ABOUT PAGE: SCROLL REVEAL ---------- */
 .reveal{
   opacity: 0;
   transform: translateY(24px);

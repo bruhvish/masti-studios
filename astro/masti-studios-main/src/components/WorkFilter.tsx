@@ -98,6 +98,20 @@ export default function WorkFilter() {
   const [openPhoto, setOpenPhoto] = useState<{ src: string; alt: string } | null>(null);
   const [hideFilters, setHideFilters] = useState(false);
 
+  // Pick up ?genre= and/or ?service= from the URL so links like
+  // /work?service=photography land with the right filter already active.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const svc = params.get('service');
+    const gen = params.get('genre');
+    if (svc && Object.keys(SERVICE_META).includes(svc)) {
+      setServiceFilter(svc as Service);
+    }
+    if (gen && Object.keys(CATEGORY_META).includes(gen)) {
+      setGenreFilter(gen as Category);
+    }
+  }, []);
+
   // Collapse the filter bar on scroll-down, bring it back on scroll-up.
   // Stays visible near the top of the page so it doesn't flicker on landing.
   useEffect(() => {
